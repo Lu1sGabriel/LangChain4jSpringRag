@@ -1,8 +1,9 @@
 package br.goes.luis.application.modules.chat.application.useCase;
 
-import java.util.List;
+import br.goes.luis.application.modules.chat.presentation.dto.request.ChatAttachDocumentRequestDto;
+
 import java.util.UUID;
 
 public interface ChatAttachDocumentUseCase {
-    void attach(UUID chatId, List<UUID> documentsIds);
+    void attach(UUID chatId, ChatAttachDocumentRequestDto requestDto);
 }
