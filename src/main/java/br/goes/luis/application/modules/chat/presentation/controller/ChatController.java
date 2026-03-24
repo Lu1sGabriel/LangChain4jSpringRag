@@ -1,7 +1,9 @@
 package br.goes.luis.application.modules.chat.presentation.controller;
 
+import br.goes.luis.application.modules.chat.application.useCase.ChatAttachDocumentUseCase;
 import br.goes.luis.application.modules.chat.application.useCase.ChatCreateUseCase;
 import br.goes.luis.application.modules.chat.application.useCase.ChatDoChatUseCase;
+import br.goes.luis.application.modules.chat.presentation.dto.request.ChatAttachDocumentRequestDto;
 import br.goes.luis.application.modules.chat.presentation.dto.request.ChatCreateRequestDto;
 import br.goes.luis.application.modules.chat.presentation.dto.request.ChatRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class ChatController {
 
     private final ChatCreateUseCase createUseCase;
     private final ChatDoChatUseCase doChatUseCase;
+    private final ChatAttachDocumentUseCase attachDocumentUseCase;
 
     @PostMapping
     public ResponseEntity<EntityModel<UUID>> create(@RequestBody ChatCreateRequestDto requestDto) {
@@ -37,6 +40,12 @@ public class ChatController {
     @PostMapping(value = "/{chatId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<String>> doChat(@PathVariable UUID chatId, @RequestBody ChatRequestDto requestDto) {
         return ResponseEntity.ok(doChatUseCase.doChat(chatId, requestDto));
+    }
+
+    @PostMapping(value = "/attach-document/{chatId}")
+    public ResponseEntity<Void> attach(@PathVariable UUID chatId, @RequestBody ChatAttachDocumentRequestDto requestDto) {
+        attachDocumentUseCase.attach(chatId, requestDto);
+        return ResponseEntity.ok().build();
     }
 
 }
