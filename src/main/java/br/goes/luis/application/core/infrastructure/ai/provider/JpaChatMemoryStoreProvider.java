@@ -25,7 +25,7 @@ public class JpaChatMemoryStoreProvider implements ChatMemoryStore {
     public List<ChatMessage> getMessages(Object memoryId) {
         UUID chatId = (UUID) memoryId;
 
-        var chat = chatRepository.findByIdOrThrow(chatId);
+        var chat = chatRepository.findByIdAndActivateOrThrow(chatId);
 
         return chat.getChatMessages()
                 .stream()
@@ -38,7 +38,7 @@ public class JpaChatMemoryStoreProvider implements ChatMemoryStore {
     public void updateMessages(Object memoryId, List<ChatMessage> messages) {
         UUID chatId = (UUID) memoryId;
 
-        var chat = chatRepository.findByIdOrThrow(chatId);
+        var chat = chatRepository.findByIdAndActivateOrThrow(chatId);
         chat.getChatMessages().clear();
 
         messages.forEach(message -> chat.addMessage(new ChatMessageEntity(chat, extractText(message), message.type())));
