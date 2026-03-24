@@ -36,9 +36,7 @@ public class ChatEntity extends BaseEntity {
     }
 
     public void addDocument(List<DocumentEntity> documents) {
-        documents.forEach(document -> {
-            chatDocuments.add(new ChatDocumentEntity(this, document));
-        });
+        documents.forEach(document -> chatDocuments.add(new ChatDocumentEntity(this, document)));
     }
 
 }
