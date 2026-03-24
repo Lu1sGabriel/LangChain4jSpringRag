@@ -1,0 +1,36 @@
+spring:
+  jpa:
+    generate-ddl: false
+    open-in-view: false
+    show-sql: false
+  application:
+    name: RetrievalAugmentedGeneration
+  threads:
+    virtual:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+vertex:
+  embedding:
+    dedicated:
+      endpoint: ${VERTEX_EMBEDDING_DEDICATED_ENDPOINT}
+    location: ${VERTEX_EMBEDDING_LOCATION}
+    endpoint:
+      id: ${VERTEX_EMBEDDING_ENDPOINT_ID}
+  gemini:
+    model:
+      name: ${VERTEX_GEMINI_MODEL_NAME}
+    location: ${VERTEX_GEMINI_LOCATION}
+  project:
+    id: ${VERTEX_PROJECT_ID}
+  documentAi:
+    project:
+      id: ${VERTEX_PROJECT_ID}
+    processor:
+      id: ${VERTEX_DOCUMENTAI_PROCESSOR}
+    location: ${VERTEX_DOCUMENTAI_LOCATION}
+google:
+  bucket:
+    name: ${GOOGLE_BUCKET_NAME}
