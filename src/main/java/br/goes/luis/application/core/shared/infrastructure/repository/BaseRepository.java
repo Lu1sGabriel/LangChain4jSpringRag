@@ -4,13 +4,18 @@ import br.goes.luis.application.core.infrastructure.exception.domain.entity.Enti
 import br.goes.luis.application.core.shared.domain.entity.BaseEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoRepositoryBean
 public interface BaseRepository<Entity extends BaseEntity> extends JpaRepository<Entity, UUID> {
 
+    @Query("SELECT e FROM #{#entityName} e WHERE e.id IN :ids AND e.deletedAt IS NULL")
+    List<Entity> findAllActiveById(@Param("ids") List<UUID> ids);
 
     default Entity findByIdOrThrow(UUID id) {
         return findById(id)
